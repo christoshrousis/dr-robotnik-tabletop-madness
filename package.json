@@ -1,0 +1,25 @@
+{
+	"name": "dr-robotnik",
+	"version": "0.0.0",
+	"license": "MIT",
+	"bin": "./build/cli.js",
+	"engines": {
+		"node": ">=8"
+	},
+	"scripts": {
+		"dev": "pastel dev",
+		"build": "pastel build",
+		"prepare": "pastel build"
+	},
+	"files": [
+		"build"
+	],
+	"dependencies": {
+		"ink": "^2.2.0",
+		"ink-text-input": "^3.2.0",
+		"lodash": "^4.17.11",
+		"pasteljs": "^1.0.2",
+		"prop-types": "^15.7.2",
+		"react": "^16.8.6"
+	}
+}
