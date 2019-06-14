@@ -3,15 +3,15 @@ import _ from "lodash";
 import { Static, Text, Box, Color } from "ink";
 import TextInput from "ink-text-input";
 
+const directions = ["NORTH", "EAST", "SOUTH", "WEST"];
 const validInstruction = new RegExp(
 	"(PLACE [0-9],[0-9],(NORTH|SOUTH|EAST|WEST)|MOVE|LEFT|RIGHT|REPORT)"
 );
 const isValidInstruction = instruction => validInstruction.exec(instruction);
 const isPlaceInstruction = instruction => instruction.indexOf("PLACE") === 0;
-// const isValidPlaceInstruction = instruction => isPlaceInstruction(instruction) &&
-// 	getXFromPlace(instruction)
 const getX = instruction => instruction.substr(6, 1);
 const getY = instruction => instruction.substr(8, 1);
+const getDirection = instruction => instruction.substr(10);
 
 class DrRobotnik extends Component {
 	constructor(props) {
@@ -19,17 +19,17 @@ class DrRobotnik extends Component {
 		this.state = {
 			query: "",
 			instructions: [],
-			acceptInstructions: true,
-			robot: {
-				isOnTableTop: false,
-				x: -1,
-				y: -1,
-				direction: "NORTH"
-			},
-			tableTop: {
-				x: 4,
-				y: 4
-			}
+			acceptInstructions: true
+		};
+		this.robot = {
+			isOnTableTop: false,
+			x: -1,
+			y: -1,
+			direction: "NORTH"
+		};
+		this.tableTop = {
+			x: 4,
+			y: 4
 		};
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
@@ -37,32 +37,60 @@ class DrRobotnik extends Component {
 	}
 
 	readInstructions() {
-		const { instructions, robot, tableTop } = this.state;
-		_.forEach(instructions, instruction => {
+		const { instructions } = this.state;
+		const { robot, tableTop } = this;
+
+		instructions.forEach(instruction => {
 			if (isValidInstruction(instruction)) {
 				if (!robot.isOnTableTop && isPlaceInstruction(instruction)) {
 					const x = getX(instruction);
 					const y = getY(instruction);
 					const direction = getDirection(instruction);
-					if (x <= tableTop.x && x > 0 && y <= tableTop.y && y > 0) {
-						robot = {
-							isOnTableTop: true,
-							x,
-							y,
-							direction
-						};
+					if (x <= tableTop.x && x >= 0 && y <= tableTop.y && y >= 0) {
+						robot.isOnTableTop = true;
+						robot.x = x;
+						robot.y = y;
+						robot.direction = direction;
 					}
 				} else if (robot.isOnTableTop) {
-					if(instruction === "MOVE") {
-
-					} else if ( instruction )
+					switch (instruction) {
+						case "MOVE":
+							switch (robot.direction) {
+								case "NORTH":
+									if (robot.y < tableTop.y) robot.y++;
+									break;
+								case "EAST":
+									if (robot.x < tableTop.x) robot.x++;
+									break;
+								case "SOUTH":
+									if (robot.y > 0) robot.y--;
+									break;
+								case "WEST":
+									if (robot.x > 0) robot.x--;
+									break;
+							}
+							break;
+						case "LEFT":
+							robot.direction =
+								directions.indexOf(robot.direction) === 0
+									? directions[directions.length - 1]
+									: directions[directions.indexOf(robot.direction) - 1];
+							break;
+						case "RIGHT":
+							robot.direction =
+								directions.length - directions.indexOf(robot.direction) === 1
+									? directions[0]
+									: directions[directions.indexOf(robot.direction) + 1];
+							break;
+					}
 				}
 			}
 		});
 	}
 
 	onSubmit(input) {
-		if (input === "") {
+		if (input === "REPORT") {
+			this.readInstructions();
 			this.setState({ acceptInstructions: false });
 		} else {
 			const instructions = this.state.instructions;
@@ -77,7 +105,7 @@ class DrRobotnik extends Component {
 
 	render() {
 		const { acceptInstructions, instructions, query } = this.state;
-
+		const { robot } = this;
 		return (
 			<>
 				{acceptInstructions ? (
@@ -95,10 +123,17 @@ class DrRobotnik extends Component {
 						/>
 					</>
 				) : (
-					<Static>
+					<>
 						<Color blue>Executing Code...</Color>
-						<Text>Result, you smell</Text>
-					</Static>
+						{robot.x === -1 ? (
+							<Color red>Dr.Robotnik never made it on the table!</Color>
+						) : (
+							<Color green>
+								Dr.Robotnik is at: {robot.x},{robot.y} and is facing{" "}
+								{robot.direction}.
+							</Color>
+						)}
+					</>
 				)}
 			</>
 		);
