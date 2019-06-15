@@ -1,8 +1,10 @@
 {
-	"name": "dr-robotnik-tabletop-madness",
-	"version": "0.0.0",
+	"name": "@christoshrousis/dr-robotnik-tabletop-madness",
+	"version": "0.0.3",
 	"license": "MIT",
-	"bin": "./build/cli.js",
+	"bin": {
+		"dr-robotnik": "./build/cli.js"
+	},
 	"engines": {
 		"node": ">=8"
 	},
@@ -30,5 +32,23 @@
 		"babel-jest": "^24.8.0",
 		"jest": "^24.8.0",
 		"react-test-renderer": "^16.8.6"
-	}
+	},
+	"description": "Dr.Robotnik wants you to place him on the tabletop. Will you be successful?",
+	"main": "./build/cli.js",
+	"directories": {
+		"lib": "lib",
+		"test": "tests"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/christoshrousis/dr-robotnik-tabletop-madness.git"
+	},
+	"keywords": [
+		"Toy Robot"
+	],
+	"author": "Christos Hrousis",
+	"bugs": {
+		"url": "https://github.com/christoshrousis/dr-robotnik-tabletop-madness/issues"
+	},
+	"homepage": "https://github.com/christoshrousis/dr-robotnik-tabletop-madness#readme"
 }

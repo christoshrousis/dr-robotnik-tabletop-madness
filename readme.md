@@ -4,11 +4,21 @@ Dr.Robotnik wants you to place him on the tabletop. Will you be successful?
 
 Dr.Robotnik is a CLI written in Javascript and React, using the library [PastelJS](https://github.com/vadimdemedes/pastel) for bundling and [Ink](https://github.com/vadimdemedes/ink) for building CLI output using React!
 
+Dr.Robotnik is an implementation of the toy robot coding challenge.
+
+## System Dependencies
+
+You will require Node >= 8 & npm installed on your machine for this to work.
+
 ## Install & Run The CLI
 
+To install the CLI from NPM:
+
 ```
-$ npm install dr-robotnik
+$ npm install @christoshrousis/dr-robotnik-tabletop-madness
 ```
+
+And then run it:
 
 ```
 $ dr-robotnik
@@ -30,13 +40,13 @@ Dr.Robotnik is at: 0,1 and is facing NORTH.
 
 Dr.Robotnik accepts all the classic `Toy Robot` favourites, such as:
 
-- `PLACE X,Y,CARDINALITY`
+- `PLACE X,Y,DIRECTION`
 - `LEFT`
 - `RIGHT`
 - `MOVE`
 - `REPORT`
 
-## To test Dr.Robotnik
+## Testing Dr.Robotnik
 
 You will need to install development packages by running
 
@@ -52,7 +62,7 @@ $ npm run test
 
 ## To develop Dr.Robotnik
 
-If for some reason the installation isn't working, you can always run Dr.Robotnik in dev mode by running
+If for some reason the installation isn't working, you can always run Dr.Robotnik in dev mode as a fallback by running
 
 ```
 $ npm run dev
