@@ -1,17 +1,14 @@
 import React, { Component } from "react";
-import _ from "lodash";
-import { Static, Text, Box, Color } from "ink";
+import { Static, Box, Color } from "ink";
 import TextInput from "ink-text-input";
-
-const directions = ["NORTH", "EAST", "SOUTH", "WEST"];
-const validInstruction = new RegExp(
-	"(PLACE [0-9],[0-9],(NORTH|SOUTH|EAST|WEST)|MOVE|LEFT|RIGHT|REPORT)"
-);
-const isValidInstruction = instruction => validInstruction.exec(instruction);
-const isPlaceInstruction = instruction => instruction.indexOf("PLACE") === 0;
-const getX = instruction => instruction.substr(6, 1);
-const getY = instruction => instruction.substr(8, 1);
-const getDirection = instruction => instruction.substr(10);
+import {
+	directions,
+	isValidInstruction,
+	isPlaceInstruction,
+	getX,
+	getY,
+	getDirection
+} from "../lib";
 
 class DrRobotnik extends Component {
 	constructor(props) {
@@ -111,7 +108,7 @@ class DrRobotnik extends Component {
 				{acceptInstructions ? (
 					<>
 						<Static>
-							<Color blue>Dr.Robotnik's Tabletop Madness Simulator</Color>
+							<Color blue>Dr.Robotnik's Tabletop Madness</Color>
 							{instructions.map((instruction, index) => (
 								<Box key={index}>{instruction}</Box>
 							))}
@@ -124,6 +121,7 @@ class DrRobotnik extends Component {
 					</>
 				) : (
 					<>
+						<Box>REPORT</Box>
 						<Color blue>Executing Code...</Color>
 						{robot.x === -1 ? (
 							<Color red>Dr.Robotnik never made it on the table!</Color>
