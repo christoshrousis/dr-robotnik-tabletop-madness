@@ -15,7 +15,7 @@ You will require Node >= 8 & npm installed on your machine for this to work.
 To install the CLI from NPM:
 
 ```
-$ npm install @christoshrousis/dr-robotnik-tabletop-madness
+$ npm install -g @christoshrousis/dr-robotnik-tabletop-madness
 ```
 
 And then run it:
